@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -31,29 +33,130 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    // Turns it into a Boolean function
+    const fifteen = inventors.filter(inventor => inventor.year >= 1500 && inventor.year < 1600)
 
-    // Array.prototype.map()
+
+    // Old way of doing it, similar to C++
+    // {
+    //   if (inventor.year >= 1500 && inventor.year < 1600) {
+    //     return true // keep it
+    //   }
+    // }
+
+    console.table(fifteen)
+
+
+    // Array.prototype.map() -> takes in stuff, returns same amount of items
     // 2. Give us an array of the inventors' first and last names
+
+    // Spacing issue, can add spaces OR
+    //const fullNames = inventors.map(inventor => inventor.first + inventor.last)
+    //console.log(fullNames)
+
+    const fullNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`)
+    console.log(fullNames)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
-    // Array.prototype.reduce()
+    // Long way
+    //const ordered = inventors.sort(function (a, b) {
+    //  if (a.year > b.year) {
+    //    return 1
+    //  } else {
+    //    return -1
+    //  }
+    //})
+
+    // Terchiary operator
+    const ordered = inventors.sort((a, b) => a.year > b.year ? 1 : -1)
+
+    console.table(ordered)
+
+    // Array.prototype.reduce() -> build on other elements
     // 4. How many years did all the inventors live?
+
+    //long way
+    //var totalYears = 0
+    //for (var i = 0; i < inventors.length; i++) {
+    //  totalYears += inventors[i].year
+    //}
+
+    const totalYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year)
+    }, 0) // initial number of years
+
+    console.log(totalYears)
 
     // 5. Sort the inventors by years lived
 
+    // Long way
+    // const oldest = inventors.sort(function (a, b) {
+    //   const lastGuy = a.passed - a.year
+    //   const nextGuy = b.passed - b.year
+    //  if (lastGuy > nextGuy) {
+    //     return 1
+    //   } else {
+    //     return -1
+    //   }
+    //})
+
+    const oldest = inventors.sort((a, b) => {
+      const lastGuy = a.passed - a.year
+      const nextGuy = b.passed - b.year
+      return lastGuy > nextGuy ? -1 : 1
+    })
+
+    console.table(oldest)
+
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+    //const category = document.querySelector('.mw-category')
+    //const links = Array.from(category.querySelectorAll('a'))
+
+    // const de = links
+    //.map - takes in array and converts it into another array (usefull for different types)
+    //.map(link => link.textContent)
+    //.filter - function that returns true or false, if true includes in output array, false, skip it
+    //.filter(streetName => streetName.includes('de'))
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    const alpha = people.sort((lastOne, nextOne) => {
+      const [aLast, afirst] = lastOne.split(', ')
+      const [blast, bfirst] = nextOne.split(', ')
+      return aLast > blast ? 1 : -1
+    })
+
+    console.log(alpha)
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+
+    const counts = {}
+
+    //counts.car   counts['car']
+
+    //type ='car'
+    //counts[type]
+
+    const transportation = data.reduce((counts, type) => {
+      if (!counts[type]) {
+        counts[type] = 0;
+      }
+      counts[type]++
+      return counts
+
+    }, counts)
+
+    console.log(transportation)
 
   </script>
 </body>
+
 </html>
